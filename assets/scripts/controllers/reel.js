@@ -188,26 +188,23 @@ cc.Class({
         }
     },
     spin: function () {
-        //start the reel spinning
-
-        ///////////////////////////////////// 
-        //TODO: it depends of the numeber of reel stops 
         var min = 1;
         var max = 2;
-        /////////////////////////////////////
         this.rollingCount = 0;
         this.stopAfterRollingCount = Math.floor(Math.random() * (max - min + 1)) + min;
-        //PRNG 
-        //gets random value with PRNG class between a min and max value
         var randomValue = PRNG.newValue(this.prngMinRange, this.prngMaxRange);
-        //normalize with the number of stops
         this.winnerIndex = (randomValue % this.stops.length);
 
         this.isRollingCompleted = false;
-        //console.log (this.stopAfterRollingCount + "-" + this.winnerIndex);
     },
     getWinnerStop: function () {
-        //returns the reel winnre index
         return this.stopNodes[this.winnerIndex];
-    }
+    },
+
+    reset: function (initialPosition) {
+        this.node.setPosition(initialPosition);
+    },
+    getPosition: function () {
+        return this.node.position.clone();
+    },
 });

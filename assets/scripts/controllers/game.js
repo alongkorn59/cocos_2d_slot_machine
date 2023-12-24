@@ -6,6 +6,7 @@ var PayTableTags = require('paytable-tags')();
 cc.Class({
     extends: cc.Component,
     properties: {
+        initialReelPositions: [],
         reels: {
             default: [],
             type: [Reel]
@@ -86,9 +87,10 @@ cc.Class({
 
     onLoad: function () {
         var that = this;
-
         this.creditLabel.string = this.currentCredit.toString();
         this.betInfoLabel.string = "";
+
+        this.storeInitialReelPositions();
 
         this.spinButton.node.on(cc.Node.EventType.TOUCH_END, function (event) {
             that.spin();
@@ -157,6 +159,13 @@ cc.Class({
             }
         });
     },
+    storeInitialReelPositions: function () {
+        // Store the initial positions of the reels
+        this.initialReelPositions = [];
+        for (var i = 0; i < this.reels.length; i++) {
+            this.initialReelPositions.push(this.reels[i].getPosition().clone());
+        }
+    },
 
     start: function () {
         this.loadUserDefault();
@@ -179,11 +188,22 @@ cc.Class({
             if (!this.isAutoSpin) {
                 this.isRollingCompleted = false;
             }
+
+            // Reset the reels before spinning
+            this.resetReels();
+
             this.setButtonsLocked(true);
             AudioManager.instance.playReelRoll();
+
             for (var i = 0; i < this.reels.length; i++) {
                 this.reels[i].spin();
             }
+        }
+    },
+    resetReels: function () {
+        for (var i = 0; i < this.reels.length; i++) {
+            // Assuming Reel class has a reset method
+            this.reels[i].reset(this.initialReelPositions[i]);
         }
     },
 
