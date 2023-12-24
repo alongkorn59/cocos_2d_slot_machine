@@ -1,16 +1,16 @@
 //defines the stop tags
-function StopTags(){
-  return{
-      BANANA:1,
-      BEGAMOT:2,
-      BONUS:3,
-      COCKTAIL:4,
-      COCODRILE:5,
-      KAKADU:6,
-      LION:7,
-      MAN:8,
-      MONKEY:9
-  };  
+function StopTags() {
+  return {
+    Neutral: 1,
+    Confusion: 2,
+    Bonus: 3,
+    Crying: 4,
+    Love: 5,
+    Wink: 6,
+    Star: 7,
+    Happy: 8,
+    Angry: 9
+  };
 }
 
-module.exports=StopTags;
+module.exports = StopTags;
